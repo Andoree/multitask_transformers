@@ -96,8 +96,14 @@ def main():
         validation_results = evaluate_classification(trainer, features_dict, dataset_dict)
         for task_name, results_dict in validation_results.items():
             for metric_name, value in results_dict.items():
-                print(f"Validation quality: Epoch {epoch_number}, {metric_name} : {value}")
+                print(f"Validation quality: Epoch {epoch_number}, task: {task_name},"
+                      f" {metric_name} : {value}")
         trainer.train()
+    validation_results = evaluate_classification(trainer, features_dict, dataset_dict)
+    for task_name, results_dict in validation_results.items():
+        for metric_name, value in results_dict.items():
+            print(f"Validation quality: After training, task: {task_name},"
+                  f" {metric_name} : {value}")
 
 
 if __name__ == '__main__':

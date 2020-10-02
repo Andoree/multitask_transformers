@@ -1,4 +1,4 @@
-from code.multitask_model import DataLoaderWithTaskname
+from multitask_model import DataLoaderWithTaskname
 import numpy as np
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
 
