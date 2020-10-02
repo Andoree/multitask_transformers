@@ -3,9 +3,9 @@ from argparse import ArgumentParser
 
 import transformers
 
-from code.evaluation import evaluate_classification
-from code.multitask_model import MultitaskModel, NLPDataCollator, MultitaskTrainer
-from code.multitask_preprocessing import load_dataset, convert_features_function, data_to_features
+from evaluation import evaluate_classification
+from multitask_model import MultitaskModel, NLPDataCollator, MultitaskTrainer
+from multitask_preprocessing import load_dataset, convert_features_function, data_to_features
 
 logging.basicConfig(level=logging.INFO)
 
