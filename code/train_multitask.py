@@ -7,7 +7,7 @@ from evaluation import evaluate_classification
 from multitask_model import MultitaskModel, NLPDataCollator, MultitaskTrainer
 from multitask_preprocessing import load_dataset, convert_features_function, data_to_features
 
-from evaluation import get_predictions, get_last_layer_embedding
+from evaluation import get_predictions, get_embeddings
 
 logging.basicConfig(level=logging.INFO)
 
@@ -137,14 +137,18 @@ def main():
     validation_predictions = get_predictions(trainer, features_dict, id_to_class, collection="validation")
     train_predictions = get_predictions(trainer, features_dict, id_to_class, collection="train")
 
-    train_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="train")
-    validation_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation")
+    # train_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="train")
+    # validation_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation")
+
+    train_embeddings = get_embeddings(multitask_model, features_dict, collection="train", )
+    validation_embeddings = get_embeddings(multitask_model, features_dict, collection="validation", )
 
     for task_name in ["task_1", "task_2"]:
         train_df = train_dfs[task_name]
         prediction_df = train_predictions[task_name]
-        emb_df = train_embeddings[task_name]
-        train_df = pd.concat([train_df, prediction_df, emb_df], axis=1, )
+        cls_emb_df = train_embeddings[task_name]["cls"]
+        mean_emb_df = train_embeddings[task_name]["mean"]
+        train_df = pd.concat([train_df, prediction_df, cls_emb_df, mean_emb_df], axis=1, )
         output_path = os.path.join(output_dir, task_name, "train.csv")
         d = os.path.dirname(output_path)
         if not os.path.exists(d):
@@ -153,8 +157,9 @@ def main():
 
         val_df = val_dfs[task_name]
         prediction_df = validation_predictions[task_name]
-        emb_df = validation_embeddings[task_name]
-        val_df = pd.concat([val_df, prediction_df, emb_df], axis=1)
+        cls_emb_df = validation_embeddings[task_name]["cls"]
+        mean_emb_df = validation_embeddings[task_name]["mean"]
+        val_df = pd.concat([val_df, prediction_df, cls_emb_df, mean_emb_df], axis=1)
         output_path = os.path.join(output_dir, task_name, "train.csv")
         d = os.path.dirname(output_path)
         if not os.path.exists(d):
