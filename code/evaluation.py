@@ -5,12 +5,12 @@ from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_sc
 import pandas as pd
 
 
-def evaluate_classification(trainer, features_dict, dataset_dict):
+def evaluate_classification(trainer, features_dict, dataset_dict, collection="validation"):
     preds_dict = {}
     for task_name in ["task_1", "task_2"]:
         eval_dataloader = DataLoaderWithTaskname(
             task_name,
-            trainer.get_eval_dataloader(eval_dataset=features_dict[task_name]["validation"])
+            trainer.get_eval_dataloader(eval_dataset=features_dict[task_name][collection])
         )
         preds_dict[task_name] = trainer._prediction_loop(
             eval_dataloader,

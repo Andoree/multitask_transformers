@@ -135,6 +135,11 @@ def main():
         for metric_name, value in results_dict.items():
             print(f"Validation quality: After training, task: {task_name},"
                   f" {metric_name} : {value}")
+    training_results = evaluate_classification(trainer, features_dict, dataset_dict, collection="train")
+    for task_name, results_dict in training_results.items():
+        for metric_name, value in results_dict.items():
+            print(f"Training quality: After training, task: {task_name},"
+                  f" {metric_name} : {value}")
 
     validation_predictions = get_predictions(trainer, features_dict, id_to_class, collection="validation")
     train_predictions = get_predictions(trainer, features_dict, id_to_class, collection="train")
