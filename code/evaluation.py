@@ -19,7 +19,7 @@ def evaluate_classification(trainer, features_dict, dataset_dict, collection="va
     for task_name in preds_dict.keys():
         prediction = preds_dict[task_name].predictions
         predicted_labels = np.argmax(prediction, axis=1)
-        val_labels = dataset_dict[task_name]["validation"]["label"]
+        val_labels = dataset_dict[task_name][collection]["label"]
         accuracy = accuracy_score(val_labels, predicted_labels, )
         macro_precision = precision_score(val_labels, predicted_labels, average="macro")
         macro_recall = recall_score(val_labels, predicted_labels, average="macro")
