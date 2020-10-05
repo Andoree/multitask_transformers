@@ -96,9 +96,9 @@ def get_embeddings(multitask_model, features_dict, collection="validation", emb_
                 mean_embedding = embedding[0][:text_end_position].mean(axis=1)
                 mean_embeddings_matrix[i] = mean_embedding
             print(f"Completed embeddings inference for task: {task_name}")
-            cls_embeddings_df = pd.DataFrame({"cls_embedding": [cls_embeddings_df, ]})
+            cls_embeddings_df = pd.DataFrame({"cls_embedding": [cls_embeddings_matrix, ]})
             embeddings_dict["cls"] = cls_embeddings_df
-            mean_embeddings_df = pd.DataFrame({"mean_embedding": [mean_embeddings_df, ]})
+            mean_embeddings_df = pd.DataFrame({"mean_embedding": [mean_embeddings_matrix, ]})
             embeddings_dict["mean"] = mean_embeddings_df
             task_embeddings_dict[task_name] = embeddings_dict
 
