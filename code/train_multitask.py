@@ -7,7 +7,7 @@ from evaluation import evaluate_classification
 from multitask_model import MultitaskModel, NLPDataCollator, MultitaskTrainer
 from multitask_preprocessing import load_dataset, convert_features_function, data_to_features
 
-from code.evaluation import get_predictions, get_last_layer_embedding
+from evaluation import get_predictions, get_last_layer_embedding
 
 logging.basicConfig(level=logging.INFO)
 
