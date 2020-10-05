@@ -100,6 +100,8 @@ def get_embeddings(multitask_model, features_dict, collection="validation", emb_
             embeddings_dict["cls"] = cls_embeddings_df
             mean_embeddings_df = pd.DataFrame({"mean_embedding": [mean_embeddings_matrix, ]})
             embeddings_dict["mean"] = mean_embeddings_df
+            print(mean_embeddings_df)
+            print(cls_embeddings_df)
             task_embeddings_dict[task_name] = embeddings_dict
 
-    return embeddings_dict
+    return task_embeddings_dict
