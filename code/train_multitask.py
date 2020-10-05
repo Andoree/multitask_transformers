@@ -1,6 +1,8 @@
 import logging
 from argparse import ArgumentParser
 import os
+
+import torch
 import transformers
 import pandas as pd
 from evaluation import evaluate_classification
@@ -23,6 +25,8 @@ def main():
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--output_dir')
     args = parser.parse_args()
+    torch.manual_seed(42)
+
     logging.basicConfig(level=logging.INFO)
 
     corpus_dir = args.corpus_dir
@@ -160,7 +164,7 @@ def main():
         cls_emb_df = validation_embeddings[task_name]["cls"]
         mean_emb_df = validation_embeddings[task_name]["mean"]
         val_df = pd.concat([val_df, prediction_df, cls_emb_df, mean_emb_df], axis=1)
-        output_path = os.path.join(output_dir, task_name, "train.csv")
+        output_path = os.path.join(output_dir, task_name, "val.csv")
         d = os.path.dirname(output_path)
         if not os.path.exists(d):
             os.makedirs(d)
