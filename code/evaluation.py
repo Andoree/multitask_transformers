@@ -1,6 +1,8 @@
+import torch
 from multitask_model import DataLoaderWithTaskname
 import numpy as np
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
+import pandas as pd
 
 
 def evaluate_classification(trainer, features_dict, dataset_dict):
@@ -30,3 +32,37 @@ def evaluate_classification(trainer, features_dict, dataset_dict):
         }
         preds_dict[task_name] = task_results
     return preds_dict
+
+
+def get_predictions(trainer, features_dict, class_names_dict, collection="validation"):
+    predictions_dict = {}
+    for task_name in ["task_1", "task_2"]:
+        eval_dataloader = DataLoaderWithTaskname(
+            task_name,
+            trainer.get_eval_dataloader(eval_dataset=features_dict[task_name][collection])
+        )
+        prediction_output = trainer._prediction_loop(
+            eval_dataloader,
+            description=f"{collection}: {task_name}",
+        )
+        class_names_list = class_names_dict[task_name]
+        prediction = prediction_output.predictions
+        prediction_df = pd.DataFrame(data=prediction, columns=class_names_list, )
+        predictions_dict[task_name] = prediction_df
+
+    return predictions_dict
+
+
+def get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation"):
+    embeddings_dict = {}
+    for task_name in ["task_1", "task_2"]:
+        eval_dataloader = DataLoaderWithTaskname(
+            task_name,
+            trainer.get_eval_dataloader(eval_dataset=features_dict[task_name][collection])
+        )
+        with torch.no_grad():
+            embeddings = multitask_model[task_name](eval_dataloader)[0]
+            embeddings_df = pd.DataFrame({"embedding": [embeddings, ]})
+            embeddings_dict[task_name] = embeddings_df
+
+    return embeddings_dict

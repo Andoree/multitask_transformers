@@ -14,9 +14,7 @@ def preprocess_dataset(dataset_df, text_column_name, class_to_id_dict, class_col
     return dataset_nlp
 
 
-def load_dataset(corpus_dir, dataset_name, text_column_name, class_column="class"):
-    train_df = pd.read_csv(os.path.join(corpus_dir, "train_{}.csv".format(dataset_name)), encoding="utf-8")
-    val_df = pd.read_csv(os.path.join(corpus_dir, "val_{}.csv".format(dataset_name)), encoding="utf-8")
+def load_dataset(train_df, val_df, text_column_name, class_column="class"):
     classes = set(train_df[class_column].unique().tolist())
     classes.update(set(val_df[class_column].unique().tolist()))
     id_to_class = {i: cl for i, cl in enumerate(classes)}
