@@ -61,7 +61,7 @@ def get_last_layer_embedding(multitask_model, trainer, features_dict, collection
             trainer.get_eval_dataloader(eval_dataset=features_dict[task_name][collection])
         )
         with torch.no_grad():
-            embeddings = multitask_model.taskmodels_dict[task_name](eval_dataloader)[0]
+            embeddings = multitask_model.taskmodels_dict[task_name](eval_dataloader.data_loader)[0]
             embeddings_df = pd.DataFrame({"embedding": [embeddings, ]})
             embeddings_dict[task_name] = embeddings_df
 

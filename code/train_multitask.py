@@ -123,28 +123,21 @@ def main():
     )
     trainer.train()
 
-    # for epoch_number in range(num_epochs):
-    #     validation_results = evaluate_classification(trainer, features_dict, dataset_dict)
-    #     for task_name, results_dict in validation_results.items():
-    #         for metric_name, value in results_dict.items():
-    #             print(f"Validation quality: Epoch {epoch_number}, task: {task_name},"
-    #                   f" {metric_name} : {value}")
-    #     trainer.train()
-    validation_results = evaluate_classification(trainer, features_dict, dataset_dict)
-    for task_name, results_dict in validation_results.items():
-        for metric_name, value in results_dict.items():
-            print(f"Validation quality: After training, task: {task_name},"
-                  f" {metric_name} : {value}")
-    training_results = evaluate_classification(trainer, features_dict, dataset_dict, collection="train")
-    for task_name, results_dict in training_results.items():
-        for metric_name, value in results_dict.items():
-            print(f"Training quality: After training, task: {task_name},"
-                  f" {metric_name} : {value}")
+    # validation_results = evaluate_classification(trainer, features_dict, dataset_dict)
+    # for task_name, results_dict in validation_results.items():
+    #     for metric_name, value in results_dict.items():
+    #         print(f"Validation quality: After training, task: {task_name},"
+    #               f" {metric_name} : {value}")
+    # training_results = evaluate_classification(trainer, features_dict, dataset_dict, collection="train")
+    # for task_name, results_dict in training_results.items():
+    #     for metric_name, value in results_dict.items():
+    #         print(f"Training quality: After training, task: {task_name},"
+    #               f" {metric_name} : {value}")
 
-    validation_predictions = get_predictions(trainer, features_dict, id_to_class, collection="validation")
-    train_predictions = get_predictions(trainer, features_dict, id_to_class, collection="train")
     train_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="train")
     validation_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation")
+    validation_predictions = get_predictions(trainer, features_dict, id_to_class, collection="validation")
+    train_predictions = get_predictions(trainer, features_dict, id_to_class, collection="train")
 
     for task_name in ["task_1", "task_2"]:
         train_df = train_dfs[task_name]
