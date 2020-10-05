@@ -56,12 +56,12 @@ def get_predictions(trainer, features_dict, class_names_dict, collection="valida
 def get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation"):
     embeddings_dict = {}
     for task_name in ["task_1", "task_2"]:
-        eval_dataloader = DataLoaderWithTaskname(
-            task_name,
-            trainer.get_eval_dataloader(eval_dataset=features_dict[task_name][collection])
-        )
+        # eval_dataloader = DataLoaderWithTaskname(
+        #     task_name,
+        eval_dataloader = trainer.get_eval_dataloader(eval_dataset=features_dict[task_name][collection])
+        #)
         with torch.no_grad():
-            embeddings = multitask_model.taskmodels_dict[task_name](eval_dataloader.data_loader)[0]
+            embeddings = multitask_model.taskmodels_dict[task_name](eval_dataloader)[0]
             embeddings_df = pd.DataFrame({"embedding": [embeddings, ]})
             embeddings_dict[task_name] = embeddings_df
 
