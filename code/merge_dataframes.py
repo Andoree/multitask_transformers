@@ -25,7 +25,8 @@ def main():
 
     train_df = pd.read_csv(train_path, encoding="utf-8")
     print("train", train_df)
-    train_df.dropna(subset=["ocr_text"]).reset_index(inplace=True)
+    train_df.dropna(subset=["ocr_text"], inplace=True)
+    train_df.reset_index(inplace=True)
     print("train", train_df)
     cls_emb_df = pd.read_csv(cls_emb_path, encoding="utf-8")
     print("train cls", cls_emb_df)
@@ -44,7 +45,8 @@ def main():
 
     val_df = pd.read_csv(val_path, encoding="utf-8")
     print("val", val_df)
-    val_df.dropna(subset=["ocr_text"]).reset_index(inplace=True)
+    val_df.dropna(subset=["ocr_text"], inplace=True)
+    val_df.reset_index(inplace=True)
     print("val", val_df)
     cls_emb_df = pd.read_csv(cls_emb_path, encoding="utf-8")
     print("val cls", cls_emb_df)
