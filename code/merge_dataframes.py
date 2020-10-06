@@ -25,7 +25,7 @@ def main():
 
     train_df = pd.read_csv(train_path, encoding="utf-8")
     print("train", train_df)
-    train_df.dropna(subset=["ocr_text"], inplace=True)
+    train_df.dropna(subset=["ocr_text"], inplace=True).reset_index(inplace=True)
     print("train", train_df)
     cls_emb_df = pd.read_csv(cls_emb_path, encoding="utf-8")
     print("train cls", cls_emb_df)
@@ -34,7 +34,7 @@ def main():
     prediction_df = pd.read_csv(prediction_path, encoding="utf-8")
     print("train prediction", prediction_df)
 
-    train_result_df = pd.concat([train_df, cls_emb_df, mean_emb_df, prediction_df], axis=1, ignore_index=True)
+    train_result_df = pd.concat([train_df, prediction_df, cls_emb_df, mean_emb_df, ], axis=1, )
     print("result train", train_result_df)
 
     val_path = os.path.join(data_dir, f"val_{corpus_name}.csv")
@@ -44,7 +44,7 @@ def main():
 
     val_df = pd.read_csv(val_path, encoding="utf-8")
     print("val", val_df)
-    val_df.dropna(subset=["ocr_text"], inplace=True)
+    val_df.dropna(subset=["ocr_text"], inplace=True).reset_index(inplace=True)
     print("val", val_df)
     cls_emb_df = pd.read_csv(cls_emb_path, encoding="utf-8")
     print("val cls", cls_emb_df)
@@ -53,7 +53,7 @@ def main():
     prediction_df = pd.read_csv(prediction_path, encoding="utf-8")
     print("val prediction", prediction_df)
 
-    val_result_df = pd.concat([val_df, cls_emb_df, mean_emb_df, prediction_df], axis=1, join="inner")
+    val_result_df = pd.concat([val_df, prediction_df, cls_emb_df, mean_emb_df, ], axis=1,)
     print("result val", val_result_df)
     output_train_path = os.path.join(output_dir, "result_train.csv")
     output_val_path = os.path.join(output_dir, "result_val.csv")
