@@ -40,13 +40,21 @@ def main():
 
     train_df_1 = pd.read_csv(os.path.join(corpus_dir, "train_{}.csv".format("sentiments_cloudvision")),
                              encoding="utf-8")
+    print("Train_1", train_df_1.shape)
     train_df_1.dropna(subset=[text_column_name], inplace=True)
+    print("Train_1", train_df_1.shape)
     val_df_1 = pd.read_csv(os.path.join(corpus_dir, "val_{}.csv".format("sentiments_cloudvision")), encoding="utf-8")
+    print("Val_1", val_df_1.shape)
     val_df_1.dropna(subset=[text_column_name], inplace=True)
+    print("Val_1", val_df_1.shape)
     train_df_2 = pd.read_csv(os.path.join(corpus_dir, "train_{}.csv".format("topics_cloudvision")), encoding="utf-8")
+    print("Train_2", train_df_2.shape)
     train_df_2.dropna(subset=[text_column_name], inplace=True)
+    print("Train_2", train_df_2.shape)
     val_df_2 = pd.read_csv(os.path.join(corpus_dir, "val_{}.csv".format("topics_cloudvision")), encoding="utf-8")
+    print("Val_2", val_df_2.shape)
     val_df_2.dropna(subset=[text_column_name], inplace=True)
+    print("Val_2", val_df_2.shape)
     train_dfs = {
         "task_1": train_df_1,
         "task_2": train_df_2
@@ -144,12 +152,15 @@ def main():
 
     validation_predictions = get_predictions(trainer, features_dict, id_to_class, collection="validation")
     train_predictions = get_predictions(trainer, features_dict, id_to_class, collection="train")
-
+    print("Pred train", train_predictions.shape)
+    print("Pred val", validation_predictions.shape)
     # train_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="train")
     # validation_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation")
 
     train_embeddings = get_embeddings(multitask_model, features_dict, collection="train", )
     validation_embeddings = get_embeddings(multitask_model, features_dict, collection="validation", )
+    print("Embe train", train_embeddings.shape)
+    print("Embe val", validation_embeddings.shape)
 
     for task_name in ["task_1", "task_2"]:
         train_df = train_dfs[task_name]
