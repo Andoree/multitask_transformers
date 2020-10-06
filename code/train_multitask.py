@@ -40,9 +40,13 @@ def main():
 
     train_df_1 = pd.read_csv(os.path.join(corpus_dir, "train_{}.csv".format("sentiments_cloudvision")),
                              encoding="utf-8")
+    train_df_1.dropna(subset=[text_column_name], inplace=True)
     val_df_1 = pd.read_csv(os.path.join(corpus_dir, "val_{}.csv".format("sentiments_cloudvision")), encoding="utf-8")
+    val_df_1.dropna(subset=[text_column_name], inplace=True)
     train_df_2 = pd.read_csv(os.path.join(corpus_dir, "train_{}.csv".format("topics_cloudvision")), encoding="utf-8")
+    train_df_2.dropna(subset=[text_column_name], inplace=True)
     val_df_2 = pd.read_csv(os.path.join(corpus_dir, "val_{}.csv".format("topics_cloudvision")), encoding="utf-8")
+    val_df_2.dropna(subset=[text_column_name], inplace=True)
     train_dfs = {
         "task_1": train_df_1,
         "task_2": train_df_2
