@@ -6,18 +6,20 @@ import pandas as pd
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('--input_dir', required=True)
+    parser.add_argument('--data_dir', required=True)
+    parser.add_argument('--classification_dir', required=True)
     parser.add_argument('--output_dir', required=True)
     args = parser.parse_args()
 
-    input_dir = args.input_dir
+    data_dir = args.data_dir
+    classification_dir = args.classification_dir
     output_dir = args.output_dir
     if not os.path.exists(output_dir) and output_dir != '':
         os.makedirs(output_dir)
-    train_path = os.path.join(input_dir, "train.csv")
-    cls_emb_path = os.path.join(input_dir, "tr_cls_emb.csv")
-    mean_emb_path = os.path.join(input_dir, "tr_mean_emb.csv")
-    prediction_path = os.path.join(input_dir, "tr_prediction.csv")
+    train_path = os.path.join(data_dir, "train.csv")
+    cls_emb_path = os.path.join(classification_dir, "tr_cls_emb.csv")
+    mean_emb_path = os.path.join(classification_dir, "tr_mean_emb.csv")
+    prediction_path = os.path.join(classification_dir, "tr_prediction.csv")
 
     train_df = pd.read_csv(train_path, encoding="utf-8")
     print("train", train_df)
@@ -33,10 +35,10 @@ def main():
     train_result_df = pd.concat([train_df, cls_emb_df, mean_emb_df, prediction_df], axis=1, ignore_index=True)
     print("result train", train_result_df)
 
-    val_path = os.path.join(input_dir, "val.csv")
-    cls_emb_path = os.path.join(input_dir, "val_cls_emb.csv")
-    mean_emb_path = os.path.join(input_dir, "val_mean_emb.csv")
-    prediction_path = os.path.join(input_dir, "val_prediction.csv")
+    val_path = os.path.join(data_dir, "val.csv")
+    cls_emb_path = os.path.join(classification_dir, "val_cls_emb.csv")
+    mean_emb_path = os.path.join(classification_dir, "val_mean_emb.csv")
+    prediction_path = os.path.join(classification_dir, "val_prediction.csv")
 
     val_df = pd.read_csv(val_path, encoding="utf-8")
     print("val", val_df)
