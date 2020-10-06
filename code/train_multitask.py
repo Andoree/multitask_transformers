@@ -152,15 +152,15 @@ def main():
 
     validation_predictions = get_predictions(trainer, features_dict, id_to_class, collection="validation")
     train_predictions = get_predictions(trainer, features_dict, id_to_class, collection="train")
-    print("Pred train", train_predictions.shape)
-    print("Pred val", validation_predictions.shape)
+    # print("Pred train", train_predictions.shape)
+    # print("Pred val", validation_predictions.shape)
     # train_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="train")
     # validation_embeddings = get_last_layer_embedding(multitask_model, trainer, features_dict, collection="validation")
 
     train_embeddings = get_embeddings(multitask_model, features_dict, collection="train", )
     validation_embeddings = get_embeddings(multitask_model, features_dict, collection="validation", )
-    print("Embe train", train_embeddings.shape)
-    print("Embe val", validation_embeddings.shape)
+    # print("Embe train", train_embeddings.shape)
+    # print("Embe val", validation_embeddings.shape)
 
     for task_name in ["task_1", "task_2"]:
         train_df = train_dfs[task_name]
@@ -172,6 +172,9 @@ def main():
         d = os.path.dirname(output_path)
         if not os.path.exists(d):
             os.makedirs(d)
+        prediction_df.to_csv(os.path.join(output_dir, task_name, "tr_prediction.csv"), encoding="utf-8", index=False)
+        cls_emb_df.to_csv(os.path.join(output_dir, task_name, "tr_cls_emb.csv"), encoding="utf-8", index=False)
+        mean_emb_df.to_csv(os.path.join(output_dir, task_name, "tr_mean_emb.csv"), encoding="utf-8", index=False)
         train_df.to_csv(output_path, encoding="utf-8", index=False)
 
         val_df = val_dfs[task_name]
@@ -183,6 +186,9 @@ def main():
         d = os.path.dirname(output_path)
         if not os.path.exists(d):
             os.makedirs(d)
+        prediction_df.to_csv(os.path.join(output_dir, task_name, "val_prediction.csv"), encoding="utf-8", index=False)
+        cls_emb_df.to_csv(os.path.join(output_dir, task_name, "val_cls_emb.csv"), encoding="utf-8", index=False)
+        mean_emb_df.to_csv(os.path.join(output_dir, task_name, "val_mean_emb.csv"), encoding="utf-8", index=False)
         val_df.to_csv(output_path, encoding="utf-8", index=False)
 
 
