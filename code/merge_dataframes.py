@@ -20,6 +20,7 @@ def main():
     prediction_path = os.path.join(input_dir, "tr_prediction.csv")
 
     train_df = pd.read_csv(train_path, encoding="utf-8")
+    print("train", train_df)
     train_df.dropna(subset=["ocr_text"], inplace=True)
     print("train", train_df)
     cls_emb_df = pd.read_csv(cls_emb_path, encoding="utf-8")
@@ -38,8 +39,9 @@ def main():
     prediction_path = os.path.join(input_dir, "val_prediction.csv")
 
     val_df = pd.read_csv(val_path, encoding="utf-8")
+    print("val", val_df)
     val_df.dropna(subset=["ocr_text"], inplace=True)
-    print("val", train_df)
+    print("val", val_df)
     cls_emb_df = pd.read_csv(cls_emb_path, encoding="utf-8")
     print("val cls", cls_emb_df)
     mean_emb_df = pd.read_csv(mean_emb_path, encoding="utf-8")
