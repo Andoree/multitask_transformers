@@ -53,7 +53,7 @@ def main():
     prediction_df = pd.read_csv(prediction_path, encoding="utf-8")
     print("val prediction", prediction_df)
 
-    val_result_df = pd.concat([val_df, cls_emb_df, mean_emb_df, prediction_df], axis=1, ignore_index=True)
+    val_result_df = pd.concat([val_df, cls_emb_df, mean_emb_df, prediction_df], axis=1, join="inner")
     print("result val", val_result_df)
     output_train_path = os.path.join(output_dir, "result_train.csv")
     output_val_path = os.path.join(output_dir, "result_val.csv")
